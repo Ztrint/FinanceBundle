@@ -1,0 +1,8 @@
+services:
+#    ztrint_finance_admin.example:
+#        class: Ztrint\Finance\AdminBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
+
+    ztrint_finance_admin.config:
+        class: Ztrint\Finance\AdminBundle\Service\Config
+        arguments: {  }

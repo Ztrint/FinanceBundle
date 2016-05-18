@@ -1,0 +1,117 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}{{ cashgroup.name }} | Grupos{% endblock %}
+
+{% block pageheader %}
+  <a href="{{ path('zf_admin_cashgroup_index') }}">Grupos</a>
+  &gt;
+  {{ cashgroup.name }}
+{% endblock %}
+
+{% block page %}
+  <div class="crud-options">
+    <a href="{{ path('zf_admin_cashgroup_edit', { 'id': cashgroup.id }) }}" class="btn btn-info">Editar</a>
+
+    {{ form_start(delete_form) }}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    {{ form_end(delete_form) }}
+  </div>
+
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>Id</th>
+        <td>{{ cashgroup.id }}</td>
+      </tr>
+      <tr>
+        <th>Nombre</th>
+        <td>{{ cashgroup.name }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row">
+    <div class="col-lg-4">
+      {% set thinc=cashgroup.totalizeIncomes() %}
+      {% set thout=cashgroup.totalizeOutcomes() %}
+      {% set thbal=thinc - thout %}
+
+      <h3>Histórico: <span class="text-{{ thbal>0 ? 'success':'danger'}}">$ {{ thbal|number_format }}</span></h3>
+      <i class="text-success">${{ thinc|number_format }}</i> - 
+      <i class="text-danger">$ {{ thout|number_format }}</i>
+    </div>
+    <div class="col-lg-4">
+      {% set ta1inc=cashgroup.totalizeIncomesValuedToSell1() %}
+      {% set ta1out=cashgroup.totalizeOutcomesValuedToSell1() %}
+      {% set ta1bal=ta1inc - ta1out %}
+
+      <h3>Venta 1: <span class="text-{{ ta1bal>0 ? 'success':'danger'}}">$ {{ ta1bal|number_format }}</span></h3>
+      <i class="text-success">${{ ta1inc|number_format }}</i> - 
+      <i class="text-danger">$ {{ ta1out|number_format }}</i>
+
+    </div>
+    <div class="col-lg-4">
+      {% set ta2inc=cashgroup.totalizeIncomesValuedToSell2() %}
+      {% set ta2out=cashgroup.totalizeOutcomesValuedToSell2() %}
+      {% set ta2bal=ta2inc - ta2out %}
+
+      <h3>Venta 2: <span class="text-{{ ta2bal>0 ? 'success':'danger'}}">$ {{ ta2bal|number_format }}</span></h3>
+      <i class="text-success">${{ ta2inc|number_format }}</i> - 
+      <i class="text-danger">$ {{ ta2out|number_format }}</i>
+    </div>
+
+  </div>
+
+  <hr>
+
+  {% for c in currencies %}
+    {% set boxes=cashgroup.getBoxesByCurrency(c) %}
+    {% if boxes|length > 0 %}
+
+      {% set bincv=cashgroup.totalizeIncomesValuedByCurrency(c) %}
+      {% set boutv=cashgroup.totalizeOutcomesValuedByCurrency(c) %}
+
+      <div class="col-lg-4">
+
+        <h4>{{ c }} {{ (bincv - boutv)|number_format }}</h4>
+
+        <span><i class="text-success">{{  bincv|number_format }}</i> - <i class="text-danger">{{  boutv|number_format }}</i></span> | 
+
+        <span>
+          <img src="{{ asset('Ztrint/Finance/Admin/img/flag/' ~ c ~ '.png') }}">
+          Compra: <b>{{ c.valuebuy|number_format }}</b> - 
+          Venta 1: <b>{{ c.valuesell|number_format }}</b> - 
+          Venta 2: <b>{{ c.valuesell2|number_format }}</b>
+        </span>
+
+        <hr>
+
+        <table class="table">
+          <thead>
+          <th>Caja</th>
+          <th>Ingresos</th>
+          <th>Egresos</th>
+          <th>Balance</th>
+          </thead>
+          <tbody>
+            {% for e in boxes %}
+              {% set incval = e.totalizeIncomesValued() %}
+              {% set outval = e.totalizeOutcomesValued() %}
+              {% set balval = incval - outval %}
+              <tr>
+                <td>
+                  <a class="text-{{ e.type=='d' ? 'danger':'success' }}" href="{{ path('zf_admin_cashbox_show', {'id':e.id}) }}">{{ e }}</a>
+                </td>
+                <td>{{ e.currency }} {{ incval|number_format }}</td>
+                <td>{{ e.currency }} {{ outval|number_format }}</td>
+                <td class="text-{{ balval > 0 ? 'success': 'danger' }}">{{ e.currency }} {{ balval|number_format }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}

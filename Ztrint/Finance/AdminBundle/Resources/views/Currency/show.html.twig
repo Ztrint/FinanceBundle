@@ -1,0 +1,91 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}{{ currency.id }} | Divisas{% endblock %}
+
+{% block pageheader %}
+  <a href="{{ path('zf_admin_currency_index') }}">Divisas</a>
+  &gt;
+  {{ currency.id }}
+{% endblock %}
+{% block page %}
+  <div class="crud-options">
+    <a href="{{ path('zf_admin_currency_edit', { 'id': currency.id }) }}" class="btn btn-info">Editar</a>
+
+    {{ form_start(delete_form) }}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    {{ form_end(delete_form) }}
+  </div>
+
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>Id</th>
+        <td><img src="{{ asset('Ztrint/Finance/Admin/img/flag/' ~ currency.id ~ '.png') }}"> {{ currency.id }}</td>
+      </tr>
+      <tr>
+        <th>Compra</th>
+        <td>{{ currency.valuebuy|number_format(4) }}</td>
+      </tr>
+      <tr>
+        <th>Venta 1</th>
+        <td>{{ currency.valuesell|number_format(4) }}</td>
+      </tr>
+      <tr>
+        <th>Venta 2</th>
+        <td>{{ currency.valuesell2|number_format(4) }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  {% set inct=currency.totalizeIncomesValued() %}
+  {% set outt=currency.totalizeOutcomesValued() %}
+  {% set balt=inct-outt %}
+
+  <div class="row">
+    <div class="col-lg-4">
+      <h3>
+        Balance: {{ currency.id }} {{ balt|number_format }}
+      </h3>
+      {{ currency.id }} 
+      <i class="text-success">{{ inct|number_format }}</i> - 
+      <i class="text-danger"> {{ outt|number_format }}</i>
+    </div>
+    <div class="col-lg-4">
+      <h3>
+        Venta 1: $ {{ (balt * currency.valuesell)|number_format }}
+      </h3>
+    </div>
+    <div class="col-lg-4">
+      <h3>
+        Venta 2: $ {{ (balt * currency.valuesell2)|number_format }}
+      </h3>
+    </div>
+  </div>
+
+  <hr>
+
+  <table class="table">
+    <thead>
+    <th>Caja</th>
+    <th>Ingresos</th>
+    <th>Egresos</th>
+    <th>Balance</th>
+  </thead>
+  <tbody>
+    {% for e in currency.boxes %}
+      {% set incval = e.totalizeIncomesValued() %}
+      {% set outval = e.totalizeOutcomesValued() %}
+      {% set balval = incval - outval %}
+      <tr>
+        <td>
+          <a class="text-{{ e.type=='d' ? 'danger':'success' }}" href="{{ path('zf_admin_cashbox_show', {'id':e.id}) }}">{{ e }}</a>
+        </td>
+        <td>{{ e.currency }} {{ incval|number_format }}</td>
+        <td>{{ e.currency }} {{ outval|number_format }}</td>
+        <td class="text-{{ balval > 0 ? 'success': 'danger' }}">{{ e.currency }} {{ balval|number_format }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

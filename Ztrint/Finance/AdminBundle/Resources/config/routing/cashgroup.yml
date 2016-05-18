@@ -1,0 +1,24 @@
+zf_admin_cashgroup_index:
+    path:     /
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Cashgroup:index" }
+    methods:  GET
+
+zf_admin_cashgroup_show:
+    path:     /{id}/show
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Cashgroup:show" }
+    methods:  GET
+
+zf_admin_cashgroup_new:
+    path:     /new
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Cashgroup:new" }
+    methods:  [GET, POST]
+
+zf_admin_cashgroup_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Cashgroup:edit" }
+    methods:  [GET, POST]
+
+zf_admin_cashgroup_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Cashgroup:delete" }
+    methods:  DELETE

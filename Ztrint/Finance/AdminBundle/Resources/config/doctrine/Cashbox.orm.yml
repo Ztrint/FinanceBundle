@@ -1,0 +1,69 @@
+Ztrint\Finance\AdminBundle\Entity\Cashbox:
+    type: entity
+    table: cashbox
+    indexes:
+        currency:
+            columns:
+                - currency
+        cashgroup:
+            columns:
+                - cashgroup
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+        type:
+            type: string
+            nullable: false
+            length: 1
+            options:
+                fixed: true
+    manyToOne:
+        currency:
+            targetEntity: Currency
+            cascade: {  }
+            fetch: LAZY
+            #mappedBy: null
+            inversedBy: boxes
+            joinColumns:
+                currency:
+                    referencedColumnName: id
+            orphanRemoval: false
+        cashgroup:
+            targetEntity: Cashgroup
+            cascade: {  }
+            fetch: LAZY
+            #mappedBy: null
+            inversedBy: boxes
+            joinColumns:
+                cashgroup:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        incomes:
+            targetEntity: Io
+            mappedBy: dest
+            cascade: {  }
+            orphanRemoval: false
+            orderBy: 
+              at: DESC
+        outcomes:
+            targetEntity: Io
+            mappedBy: source
+            cascade: {  }
+            orphanRemoval: false
+            orderBy: 
+              at: DESC
+    lifecycleCallbacks: {  }

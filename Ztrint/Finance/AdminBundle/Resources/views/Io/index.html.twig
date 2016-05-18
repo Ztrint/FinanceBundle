@@ -1,0 +1,82 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Movimientos{% endblock %}
+
+{% block pageheader %}Movimientos{% endblock %}
+{% block page %}
+
+  <a href="{{ path('zf_admin_io_new') }}" class="btn btn-info">Crear</a>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th colspan="4">Detalles</th>
+        <th colspan="1">Contravalor</th>
+        <th colspan="2">Valor</th>
+        <th colspan="1" rowspan="2">Acciones</th>
+      </tr>
+      <tr>
+        <th>Fecha</th>
+        <th>Origen</th>
+        <th>Destino</th>
+        <th>Concepto</th>
+        <th>Importe</th>
+        <th>Cotización</th>
+        <th>Importe</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set amcur=0 %}
+      {% set totamount=0 %}
+      {% set totamcur=0 %}
+      {% for io in ios %}
+        {% set amcur = io.amount / io.price %}
+        {% set totamount = totamount+io.amount %}
+        {% set totamcur = totamcur+amcur %}
+        {% set color = (io.source.type=='c' ? (io.dest.type=='d' ? 'danger':'success'):'muted') %}
+        <tr>
+          {# detalles #}
+          <td><a href="{{ path('zf_admin_io_show', { 'id': io.id }) }}">{% if io.at %}{{ io.at|date('Y-m-d') }}{% endif %}</a></td>
+          <td><a class="text-{{ (io.source.type=='d' ? 'danger':'success') }}" href="{{ path('zf_admin_cashbox_show', { 'id': io.source.id }) }}">{{ io.source }}</a></td>
+          <td><a class="text-{{ (io.dest.type=='d' ? 'danger':'success') }}" href="{{ path('zf_admin_cashbox_show', { 'id': io.dest.id }) }}">{{ io.dest }}</a></td>
+          <td>{{ io.concept }}</td>
+
+          {# contravalor #}
+          <td class="text-{{ color }}">
+            $ {{ io.amount|number_format }}
+          </td>
+
+          {# valor #}
+          <td>
+            <img src="{{ asset('Ztrint/Finance/Admin/img/flag/' ~ io.dest.currency ~ '.png') }}">
+            {{ io.price|number_format }}
+          </td>
+          <td class="text-{{ color }}">
+            <i>
+              {{ io.dest.currency }} 
+              {{ amcur|number_format }}
+            </i>
+          </td>
+
+          {# acciones #}
+          <td>
+            <a href="{{ path('zf_admin_io_edit', { 'id': io.id }) }}">Editar</a>
+          </td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+          <h3>Flujo:</h3>
+          <h2>{{ totamount|number_format(3) }}</h2>
+        </td>
+        <td></td>
+        <td><h3>{{ totamcur|number_format(3) }}</h3></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}

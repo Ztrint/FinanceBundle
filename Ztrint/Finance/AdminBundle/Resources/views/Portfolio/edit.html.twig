@@ -1,0 +1,22 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Cartera de inversiones{% endblock %}
+
+{% block pageheader %}Edición de inversión{% endblock %}
+{% block page %}
+  {{ form_start(edit_form) }}
+  {{ form_widget(edit_form) }}
+  <input type="submit" value="Edit" />
+  {{ form_end(edit_form) }}
+
+  <ul>
+    <li>
+      <a href="{{ path('zf_admin_index') }}">Back to the list</a>
+    </li>
+    <li>
+      {{ form_start(delete_form) }}
+      <input type="submit" value="Delete">
+      {{ form_end(delete_form) }}
+    </li>
+  </ul>
+{% endblock %}

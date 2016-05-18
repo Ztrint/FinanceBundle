@@ -1,0 +1,41 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Cartera de inversiones{% endblock %}
+
+{% block pageheader %}Cartera de inversiones{% endblock %}
+
+{% block page %}
+
+  <a href="{{ path('zf_admin_portfolio_new') }}" class="btn btn-info">Crear</a>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Currency</th>
+        <th>Deposit</th>
+        <th>Anr</th>
+        <th>Cert</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for portfolio in portfolios %}
+        <tr>
+          <td><a href="{{ path('zf_admin_portfolio_show', { 'id': portfolio.id }) }}">{{ portfolio.id }}</a></td>
+          <td>{% if portfolio.start %}{{ portfolio.start|date('Y-m-d') }}{% endif %}</td>
+          <td>{% if portfolio.end %}{{ portfolio.end|date('Y-m-d') }}{% endif %}</td>
+          <td>{{ portfolio.currency }}</td>
+          <td>{{ portfolio.deposit }}</td>
+          <td>{{ portfolio.anr }}</td>
+          <td>{{ portfolio.cert }}</td>
+          <td>
+            <a href="{{ path('zf_admin_portfolio_edit', { 'id': portfolio.id }) }}">edit</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

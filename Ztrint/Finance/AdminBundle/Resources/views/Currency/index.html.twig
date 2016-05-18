@@ -1,0 +1,34 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Divisas{% endblock %}
+
+{% block pageheader %}Divisas{% endblock %}
+{% block page %}
+
+  <a href="{{ path('zf_admin_currency_new') }}" class="btn btn-info">Crear</a>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Compra</th>
+        <th>Venta 1</th>
+        <th>Venta 2</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for currency in currencies %}
+        <tr>
+          <td><a href="{{ path('zf_admin_currency_show', { 'id': currency.id }) }}">{{ currency.id }}</a></td>
+          <td>{{   currency.valuebuy|number_format(3)}}</td>
+          <td>{{  currency.valuesell|number_format(3) }}</td>
+          <td>{{ currency.valuesell2|number_format(3) }}</td>
+          <td>
+            <a href="{{ path('zf_admin_currency_edit', { 'id': currency.id }) }}">Editar</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

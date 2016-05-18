@@ -1,0 +1,24 @@
+zf_admin_currency_index:
+    path:     /
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Currency:index" }
+    methods:  GET
+
+zf_admin_currency_show:
+    path:     /{id}/show
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Currency:show" }
+    methods:  GET
+
+zf_admin_currency_new:
+    path:     /new
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Currency:new" }
+    methods:  [GET, POST]
+
+zf_admin_currency_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Currency:edit" }
+    methods:  [GET, POST]
+
+zf_admin_currency_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Currency:delete" }
+    methods:  DELETE

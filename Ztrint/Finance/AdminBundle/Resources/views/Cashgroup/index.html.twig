@@ -1,0 +1,34 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Grupos{% endblock %}
+
+{% block pageheader %}
+  Grupos
+{% endblock %}
+
+{% block page %}
+  <div class="crud-options">
+    <a href="{{ path('zf_admin_cashgroup_new') }}" class="btn btn-info">Crear</a>  
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cashgroup in cashgroups %}
+        <tr>
+          <td><a href="{{ path('zf_admin_cashgroup_show', { 'id': cashgroup.id }) }}">{{ cashgroup.id }}</a></td>
+          <td>{{ cashgroup.name }}</td>
+          <td>
+            <a href="{{ path('zf_admin_cashgroup_edit', { 'id': cashgroup.id }) }}">Editar</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

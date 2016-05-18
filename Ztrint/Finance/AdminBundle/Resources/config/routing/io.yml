@@ -1,0 +1,24 @@
+zf_admin_io_index:
+    path:     /
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Io:index" }
+    methods:  GET
+
+zf_admin_io_show:
+    path:     /{id}/show
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Io:show" }
+    methods:  GET
+
+zf_admin_io_new:
+    path:     /new
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Io:new" }
+    methods:  [GET, POST]
+
+zf_admin_io_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Io:edit" }
+    methods:  [GET, POST]
+
+zf_admin_io_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Io:delete" }
+    methods:  DELETE

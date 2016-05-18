@@ -1,0 +1,22 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Movimientos{% endblock %}
+
+{% block pageheader %}
+  <a href="{{ path('zf_admin_io_index') }}">Movimientos</a>
+  &gt;
+  Nuevo movimiento
+{% endblock %}
+
+{% block page %}
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  <button type="submit" class="btn btn-success">Crear</button>
+  {{ form_end(form) }}
+
+  <datalist id="concepts">
+    {% for e in concepts %}
+      <option value="{{ e.concept }}">
+      {% endfor %}
+  </datalist>
+{% endblock %}

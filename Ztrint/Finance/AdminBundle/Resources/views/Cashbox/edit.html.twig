@@ -1,0 +1,18 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Cajas{% endblock %}
+
+{% block pageheader %}
+  <a href="{{ path('zf_admin_cashbox_index') }}">Cajas</a>
+  &gt;
+  <a href="{{ path('zf_admin_cashbox_show',{'id':cashbox.id}) }}">{{ cashbox }}</a>
+  &gt;
+  Edición
+{% endblock %}
+
+{% block page %}
+  {{ form_start(edit_form) }}
+  {{ form_widget(edit_form) }}
+  <button type="submit" class="btn btn-success">Guardar</button>
+  {{ form_end(edit_form) }}
+{% endblock %}

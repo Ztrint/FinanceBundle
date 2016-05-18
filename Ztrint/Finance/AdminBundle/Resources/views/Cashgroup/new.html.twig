@@ -1,0 +1,16 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Grupos{% endblock %}
+
+{% block pageheader %}
+  <a href="{{ path('zf_admin_cashgroup_index') }}">Grupos</a>
+  &gt;
+  Nuevo grupo
+{% endblock %}
+
+{% block page %}
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  <button type="submit" class="btn btn-success">Crear</button>
+  {{ form_end(form) }}
+{% endblock %}

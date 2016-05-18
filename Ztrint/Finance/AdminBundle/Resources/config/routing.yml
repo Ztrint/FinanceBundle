@@ -1,0 +1,27 @@
+ztrint_finance_admin_io:
+    resource: "@ZtrintFinanceAdminBundle/Resources/config/routing/io.yml"
+    prefix:   /io/
+
+ztrint_finance_admin_currency:
+    resource: "@ZtrintFinanceAdminBundle/Resources/config/routing/currency.yml"
+    prefix:   /currency/
+
+ztrint_finance_admin_cashgroup:
+    resource: "@ZtrintFinanceAdminBundle/Resources/config/routing/cashgroup.yml"
+    prefix:   /cashgroup/
+    
+ztrint_finance_admin_cashbox:
+    resource: "@ZtrintFinanceAdminBundle/Resources/config/routing/cashbox.yml"
+    prefix:   /cashbox/
+    
+ztrint_finance_admin_portfolio:
+    resource: "@ZtrintFinanceAdminBundle/Resources/config/routing/portfolio.yml"
+    prefix:   /portfolio/
+ 
+ztrint_finance_admin_duty:
+    resource: "@ZtrintFinanceAdminBundle/Resources/config/routing/duty.yml"
+    prefix:   /duty/
+     
+ztrint_finance_admin_home:
+    resource: "@ZtrintFinanceAdminBundle/Resources/config/routing/home.yml"
+    prefix:   /home/

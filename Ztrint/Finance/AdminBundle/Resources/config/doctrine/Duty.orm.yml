@@ -1,0 +1,53 @@
+Ztrint\Finance\AdminBundle\Entity\Duty:
+    type: entity
+    table: duty
+    indexes:
+        currency:
+            columns:
+                - currency
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        at:
+            type: date
+            nullable: false
+        amount:
+            type: decimal
+            nullable: false
+            precision: 12
+            scale: 3
+        price:
+            type: decimal
+            nullable: false
+            precision: 6
+            scale: 3
+        tax:
+            type: decimal
+            nullable: false
+            precision: 6
+            scale: 3
+        concept:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+    manyToOne:
+        currency:
+            targetEntity: Currency
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                currency:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

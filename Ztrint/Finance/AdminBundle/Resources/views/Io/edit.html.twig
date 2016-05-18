@@ -1,0 +1,18 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Movimientos{% endblock %}
+
+{% block pageheader %}
+  <a href="{{ path('zf_admin_io_index') }}">Movimientos</a>
+  &gt;
+  <a href="{{ path('zf_admin_io_show', {'id':io.id}) }}">{{ io.at|date('Y-m-d') }}</a>
+  &gt;
+  Edición
+{% endblock %}
+
+{% block page %}
+  {{ form_start(edit_form) }}
+  {{ form_widget(edit_form) }}
+  <input type="submit" value="Guardar" class="btn btn-success" />
+  {{ form_end(edit_form) }}
+{% endblock %}

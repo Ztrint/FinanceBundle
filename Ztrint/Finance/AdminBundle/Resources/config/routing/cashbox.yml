@@ -1,0 +1,24 @@
+zf_admin_cashbox_index:
+    path:     /
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Cashbox:index" }
+    methods:  GET
+
+zf_admin_cashbox_show:
+    path:     /{id}/show
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Cashbox:show" }
+    methods:  GET
+
+zf_admin_cashbox_new:
+    path:     /new
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Cashbox:new" }
+    methods:  [GET, POST]
+
+zf_admin_cashbox_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Cashbox:edit" }
+    methods:  [GET, POST]
+
+zf_admin_cashbox_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ZtrintFinanceAdminBundle:Cashbox:delete" }
+    methods:  DELETE

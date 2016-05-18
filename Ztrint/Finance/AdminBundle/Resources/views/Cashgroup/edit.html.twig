@@ -1,0 +1,18 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Grupos{% endblock %}
+
+{% block pageheader %}
+  <a href="{{ path('zf_admin_cashgroup_index') }}">Grupos</a>
+  &gt;
+  <a href="{{ path('zf_admin_cashgroup_show', {'id':cashgroup.id}) }}">{{ cashgroup.name }}</a>
+  &gt;
+  Editar
+{% endblock %}
+
+{% block page %}
+  {{ form_start(edit_form) }}
+  {{ form_widget(edit_form) }}
+  <button type="submit" class="btn btn-success">Guardar</button>
+  {{ form_end(edit_form) }}
+{% endblock %}

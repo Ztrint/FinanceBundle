@@ -1,0 +1,54 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Cartera de inversiones{% endblock %}
+
+{% block pageheader %}Detalle de Inversión{% endblock %}
+
+{% block page %}
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>Id</th>
+        <td>{{ portfolio.id }}</td>
+      </tr>
+      <tr>
+        <th>Start</th>
+        <td>{% if portfolio.start %}{{ portfolio.start|date('Y-m-d') }}{% endif %}</td>
+      </tr>
+      <tr>
+        <th>End</th>
+        <td>{% if portfolio.end %}{{ portfolio.end|date('Y-m-d') }}{% endif %}</td>
+      </tr>
+      <tr>
+        <th>Currency</th>
+        <td>{{ portfolio.currency }}</td>
+      </tr>
+      <tr>
+        <th>Deposit</th>
+        <td>{{ portfolio.deposit }}</td>
+      </tr>
+      <tr>
+        <th>Anr</th>
+        <td>{{ portfolio.anr }}</td>
+      </tr>
+      <tr>
+        <th>Cert</th>
+        <td>{{ portfolio.cert }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ul>
+    <li>
+      <a href="{{ path('zf_admin_portfolio_index') }}">Back to the list</a>
+    </li>
+    <li>
+      <a href="{{ path('zf_admin_portfolio_edit', { 'id': portfolio.id }) }}">Editar</a>
+    </li>
+    <li>
+      {{ form_start(delete_form) }}
+      <input type="submit" value="Delete">
+      {{ form_end(delete_form) }}
+    </li>
+  </ul>
+{% endblock %}

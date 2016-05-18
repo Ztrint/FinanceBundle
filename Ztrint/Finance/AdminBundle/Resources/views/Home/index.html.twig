@@ -1,0 +1,121 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block pageheader %}Bienvenido{% endblock %}
+
+{% block page %}
+
+
+  <h3>Resumen</h3>
+  <hr>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th rowspan="2">Divisa</th>
+        <th colspan="2">Cotización</th>
+        <th colspan="3">Estado</th>
+        <th colspan="2">Capital</th>
+      </tr>
+      <tr>
+        <th>Compra</th>
+        <th>Ponderada</th>
+
+        <th>Ingresos</th>
+        <th>Egresos</th>
+        <th>Balance</th>
+
+        <th>Histórico</th>
+        <th>Venta 1</th>
+        <th>Venta 2</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set toth= 0 %}
+      {% set totv1= 0 %}
+      {% set totv2= 0 %}
+
+      {% for e in yourrates %}
+        {% set pwgt=e.getIosPriceWeighted() %}
+        {% set inct=e.totalizeIncomesValued() %}
+        {% set outt=e.totalizeOutcomesValued() %}
+        {% set balt= inct-outt %}
+
+        {% set inch = e.totalizeIncomes() %}
+        {% set outh = e.totalizeOutcomes() %}
+        {% set balth= inch - outh %}
+
+        {% set baltv1= balt * e.valuesell %}
+        {% set baltv2= balt * e.valuesell2 %}
+
+        {% set toth= toth + balth %}
+        {% set totv1= totv1 + baltv1 %}
+        {% set totv2= totv2 + baltv2 %}
+
+        {% set emit= pwgt/e.valuebuy %}
+
+        <tr>
+          <td>
+            <img src="{{ asset('Ztrint/Finance/Admin/img/flag/' ~ e.id ~ '.png') }}">
+            <a href="{{ path('zf_admin_currency_show', { 'id':e.id }) }}">{{ e.id }}</a>
+          </td>
+
+          <td>{{ e.valuebuy|number_format(3) }}</td>
+          <td class="hint text-{{ emit>1 ? 'danger': (emit>0.85 ? 'warning':'success') }}" title="Indicador de riesgo: {{ (emit*100)|number_format(2) }}%">
+            {{ pwgt|number_format(3) }}
+          </td>
+
+          <td class="text-{{ inct>0 ? 'success':'danger' }}">{{ inct|number_format }}</td>
+          <td class="text-{{ outt>0 ? 'success':'danger' }}">{{ outt|number_format }}</td>
+          <td class="text-{{ balt>0 ? 'success':'danger' }}"><b>{{ balt|number_format }}</b></td>
+
+          <td>
+            {{ balth|number_format }}<br />
+            <small><small>{{ inch|number_format }} - {{ outh|number_format }}</small></small>
+          </td>
+          <td>
+            $ {{ baltv1|number_format }}<br />
+            <small><small>Cot. {{ e.valuesell|number_format(3) }}</small></small>
+          </td>
+          <td>
+            $ {{ baltv2|number_format }}<br />
+            <small><small>Cot. {{ e.valuesell2|number_format(3) }}</small></small>
+          </td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <td colspan="6"><h4>Total</h4></td>
+        <td><h4>$ {{  toth|number_format }}</h4></td>
+        <td><h4>$ {{ totv1|number_format }}</h4></td>
+        <td><h4>$ {{ totv2|number_format }}</h4></td>
+      </tr>
+
+      {% set totv1dif= totv1-toth %}
+      {% set totv2dif= totv2-toth %}
+
+      <tr>
+        <td colspan="7"><h4>Margen</h4></td>
+        <td class="text-{{ totv1dif > 0 ? 'success':'danger' }}">
+          <h5>$ {{ totv1dif|number_format }}</h5>
+          <small>
+            <i class="fa fa-sort-{{ totv1dif > 0 ? 'asc':'desc'}}"></i>
+            {{(totv1dif/totv1*100)|number_format }}%
+          </small>
+        </td>
+        <td class="text-{{ totv2dif > 0 ? 'success':'danger' }}">
+          <h5>$ {{ totv2dif|number_format }}</h5>
+          <small>
+            <i class="fa fa-sort-{{ totv2dif > 0 ? 'asc':'desc'}}"></i>
+            {{(totv2dif/totv2*100)|number_format }}%
+          </small>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  {% for e in widgets %}
+    {{ e.render()|raw }}
+  {% endfor %}
+
+{% endblock %}

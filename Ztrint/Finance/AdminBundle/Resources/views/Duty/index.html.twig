@@ -1,0 +1,41 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Impuestos{% endblock %}
+
+{% block pageheader %}Impuestos{% endblock %}
+
+{% block page %}
+  <a href="{{ path('zf_admin_duty_new') }}" class="btn btn-info">Crear</a>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>El</th>
+        <th>Concepto</th>
+        <th>Importe</th>
+        <th>Cotización</th>
+        <th>Retención (%)</th>
+        <th>Contravalor</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for duty in duties %}
+        <tr>
+          <td><a href="{{ path('zf_admin_duty_show', { 'id': duty.id }) }}">{% if duty.at %}{{ duty.at|date('Y-m-d') }}{% endif %}</a></td>
+          <td>{{ duty.concept }}</td>
+          <td>{{ duty.currency }} {{ duty.amount }}</td>
+          <td>{{ duty.price }}</td>
+          <td>
+            {{ duty.tax }}
+            ({{ duty.currency}} {{ duty.amount * duty.tax * 0.01 }})
+          </td>
+          <td>{{ duty.amount * duty.price * duty.tax * 0.01 }}</td>
+          <td>
+            <a href="{{ path('zf_admin_duty_edit', { 'id': duty.id }) }}">Editar</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

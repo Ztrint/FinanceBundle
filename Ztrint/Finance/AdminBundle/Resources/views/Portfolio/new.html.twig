@@ -1,0 +1,18 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Cartera de inversiones{% endblock %}
+
+{% block pageheader %}Nueva inversión{% endblock %}
+
+{% block page %}
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  <input type="submit" value="Create" />
+  {{ form_end(form) }}
+
+  <ul>
+    <li>
+      <a href="{{ path('zf_admin_portfolio_index') }}">Back to the list</a>
+    </li>
+  </ul>
+{% endblock %}

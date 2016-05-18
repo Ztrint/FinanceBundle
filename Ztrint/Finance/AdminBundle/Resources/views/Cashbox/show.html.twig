@@ -1,0 +1,98 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}{{ cashbox }} | Cajas{% endblock %}
+
+{% block pageheader %}
+  <a href="{{ path('zf_admin_cashbox_index') }}">Cajas</a>
+  &gt;
+  {{ cashbox }}
+{% endblock %}
+
+{% block page %}
+  <div class="crud-options">
+    <a href="{{ path('zf_admin_cashbox_edit', { 'id': cashbox.id }) }}" class="btn btn-info">Editar</a>
+
+    {{ form_start(delete_form) }}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    {{ form_end(delete_form) }}
+  </div>
+
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>Grupo</th>
+        <td>{{ cashbox.cashgroup }}</td>
+      </tr>
+      <tr>
+        <th>Divisa</th>
+        <td>{{ cashbox.currency }}</td>
+      </tr>
+      <tr>
+        <th>Tipo</th>
+        <td>{{ desc.cashbox.type[cashbox.type] }}</td>
+      </tr>
+
+      <tr>
+        <th>Nombre</th>
+        <td>{{ cashbox.name }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  {% set inclocal=cashbox.totalizeIncomes() %}
+  {% set outlocal=cashbox.totalizeOutcomes() %}
+  {% set ballocal=inclocal - outlocal %}
+
+  {% set incvalued=cashbox.totalizeIncomesValued() %}
+  {% set outvalued=cashbox.totalizeOutcomesValued() %}
+  {% set balvalued=incvalued - outvalued %}
+
+  {% set prcmin=cashbox.getIosPriceMin() %}
+  {% set prcmax=cashbox.getIosPriceMax() %}
+  {% set prcavg=cashbox.getIosPriceAvg() %}
+  {% set prcwgt=cashbox.getIosPriceWeighted() %}
+  {% set prcsl1=cashbox.currency.valuesell %}
+  {% set prcsl2=cashbox.currency.valuesell2 %}
+  {% set prcdgr=(prcwgt >= prcsl2) %}
+
+  <div class="row">
+    <div class="col-lg-3">
+      <h3>Balance: {{cashbox.currency}} {{ balvalued|number_format }}</h3>
+      Recomendación de divisa:
+      <b title="promedio ponderado / cotización actual" class="hint text-{{ prcdgr ? 'danger':'success' }}">{{ prcdgr ? 'Emitir':'Adquirir' }}</b>
+    </div>
+    <div class="col-lg-3">
+      <h3>Histórico: $ {{ ballocal|number_format }}</h3>
+      <img src="{{ asset('Ztrint/Finance/Admin/img/flag/' ~ cashbox.currency ~ '.png') }}">
+      Pond. <b class="text-{{ prcdgr ? 'danger':'success' }}">{{ prcwgt|number_format }}</b> - 
+      Prom. <b>{{ prcavg|number_format }}</b> - 
+      Mín.  <b>{{ prcmin|number_format }}</b> - 
+      Máx.  <b>{{ prcmax|number_format }}</b> 
+    </div>
+    <div class="col-lg-3">
+      <h3>Actual 1: $ {{ (balvalued * cashbox.currency.valuesell)|number_format }}</h3>
+      <img src="{{ asset('Ztrint/Finance/Admin/img/flag/' ~ cashbox.currency ~ '.png') }}">
+      Act 1. <b>{{ cashbox.currency.valuesell|number_format }}</b>
+    </div>
+    <div class="col-lg-3">
+      <h3>Actual 2: $ {{ (balvalued * cashbox.currency.valuesell2)|number_format }}</h3>
+      <img src="{{ asset('Ztrint/Finance/Admin/img/flag/' ~ cashbox.currency ~ '.png') }}">
+      Act 2. <b>{{ cashbox.currency.valuesell2|number_format }}</b>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h4>Ingresos: {{cashbox.currency}} {{ incvalued|number_format }} ($ {{ inclocal|number_format }} hist.)</h4>
+      <hr>
+      {% include 'ZtrintFinanceAdminBundle:Cashbox:show_io.html.twig' with {'ios': cashbox.incomes } %}
+    </div>
+    <div class="col-lg-6">
+      <h4>Egresos:  {{cashbox.currency}} {{ outvalued|number_format }} ($ {{ outlocal|number_format }} hist.)</h4>
+      <hr>
+      {% include 'ZtrintFinanceAdminBundle:Cashbox:show_io.html.twig' with {'ios': cashbox.outcomes } %}
+    </div>
+  </div>
+{% endblock %}

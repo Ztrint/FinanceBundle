@@ -1,0 +1,51 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Impuestos{% endblock %}
+
+{% block pageheader %}Impuestos{% endblock %}
+{% block page %}
+  <h1>Duty</h1>
+
+  <table>
+    <tbody>
+      <tr>
+        <th>Id</th>
+        <td>{{ duty.id }}</td>
+      </tr>
+      <tr>
+        <th>At</th>
+        <td>{% if duty.at %}{{ duty.at|date('Y-m-d') }}{% endif %}</td>
+      </tr>
+      <tr>
+        <th>Amount</th>
+        <td>{{ duty.amount }}</td>
+      </tr>
+      <tr>
+        <th>Price</th>
+        <td>{{ duty.price }}</td>
+      </tr>
+      <tr>
+        <th>Tax</th>
+        <td>{{ duty.tax }}</td>
+      </tr>
+      <tr>
+        <th>Concept</th>
+        <td>{{ duty.concept }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ul>
+    <li>
+      <a href="{{ path('zf_admin_duty_index') }}">Back to the list</a>
+    </li>
+    <li>
+      <a href="{{ path('zf_admin_duty_edit', { 'id': duty.id }) }}">Edit</a>
+    </li>
+    <li>
+      {{ form_start(delete_form) }}
+      <input type="submit" value="Delete">
+      {{ form_end(delete_form) }}
+    </li>
+  </ul>
+{% endblock %}

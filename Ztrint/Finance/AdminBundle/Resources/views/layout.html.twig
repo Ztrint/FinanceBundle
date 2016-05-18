@@ -1,0 +1,50 @@
+{% extends "::base.html.twig" %}
+
+{% block styles %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('Ztrint/Finance/Admin/vendor/sb-admin-2-1.0.8/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('Ztrint/Finance/Admin/vendor/sb-admin-2-1.0.8/bower_components/metisMenu/dist/metisMenu.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('Ztrint/Finance/Admin/vendor/sb-admin-2-1.0.8/dist/css/sb-admin-2.css') }}">
+  <link rel="stylesheet" href="{{ asset('Ztrint/Finance/Admin/vendor/sb-admin-2-1.0.8/bower_components/morrisjs/morris.css') }}">
+  <link rel="stylesheet" href="{{ asset('Ztrint/Finance/Admin/vendor/sb-admin-2-1.0.8/bower_components/font-awesome/css/font-awesome.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('Ztrint/Finance/Admin/css/style.css') }}">
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+{% endblock %}
+
+{% block body %}
+  <div id="wrapper">
+
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+      {% include 'ZtrintFinanceAdminBundle::head.html.twig' %}
+      {% include 'ZtrintFinanceAdminBundle::nav.html.twig' %}
+    </nav>
+
+    <div id="page-wrapper">
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 class="page-header">{% block pageheader %}{% endblock %}</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          {% block page %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('Ztrint/Finance/Admin/vendor/sb-admin-2-1.0.8/bower_components/jquery/dist/jquery.min.js') }}"></script>
+  <script src="{{ asset('Ztrint/Finance/Admin/vendor/sb-admin-2-1.0.8/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('Ztrint/Finance/Admin/vendor/sb-admin-2-1.0.8/bower_components/metisMenu/dist/metisMenu.min.js') }}"></script>
+  <script src="{{ asset('Ztrint/Finance/Admin/vendor/sb-admin-2-1.0.8/bower_components/raphael/raphael-min.js') }}"></script>
+  <script src="{{ asset('Ztrint/Finance/Admin/vendor/sb-admin-2-1.0.8/bower_components/morrisjs/morris.min.js') }}"></script>
+  <script src="{{ asset('Ztrint/Finance/Admin/vendor/sb-admin-2-1.0.8/dist/js/sb-admin-2.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'ZtrintFinanceAdminBundle::layout.html.twig' %}
+
+{% block title %}Movimientos{% endblock %}
+
+{% block pageheader %}
+  <a href="{{ path('zf_admin_io_index') }}">Movimientos</a>
+  &gt;
+  {{ io.at|date('Y-m-d') }}
+{% endblock %}
+
+{% block page %}
+  <div class="crud-options">
+    <a href="{{ path('zf_admin_io_edit', { 'id': io.id }) }}" class="btn btn-info">Editar</a>
+
+    {{ form_start(delete_form) }}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    {{ form_end(delete_form) }}  
+  </div>
+  
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>Fecha</th>
+        <td>{% if io.at %}{{ io.at|date('Y-m-d') }}{% endif %}</td>
+      </tr>
+      <tr>
+        <th>Concepto</th>
+        <td>{{ io.concept }}</td>
+      </tr>
+      <tr>
+        <th>Importe</th>
+        <td>{{ io.amount }}</td>
+      </tr>
+      <tr>
+        <th>Cotización</th>
+        <td>{{ io.price }}</td>
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}
